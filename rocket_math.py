@@ -1,6 +1,7 @@
 import sys
 from time import sleep
 import pygame
+import random
 
 from settings import Settings
 from ship import Ship
@@ -27,6 +28,7 @@ class NumberInvasion:
         self.bullets = pygame.sprite.Group()
         self.numbers = pygame.sprite.Group()
         self.answer = None
+        self.problem_answer = None
 
         self._create_fleet()
 
@@ -97,13 +99,17 @@ class NumberInvasion:
         # If so, get rid of the bullet and the number.
         collisions = pygame.sprite.groupcollide(self.bullets, self.numbers, True, True)
 
+        # If the answer is hit it is recognized.
         if self.answer not in self.numbers:
+            self.bullets.empty()
+            self.numbers.empty()
+            self._create_fleet()
             print("hit")
 
-        if not self.numbers:
+        #if not self.numbers:
             # Destroy existing bullets and create new fleet.
-            self.bullets.empty()
-            self._create_fleet()
+            #self.bullets.empty()
+            #self._create_fleet()
 
 
     def _update_numbers(self):
@@ -146,8 +152,9 @@ class NumberInvasion:
 
     def _create_fleet(self):
         """Create the fleet of numbers."""
+        print(self.problem_answer)
         # Make a number.
-        number = Numbers(self)
+        number = Numbers(self, self.problem_answer)
         number_width, number_height = number.rect.size
         available_space_x = self.settings.screen_width - (2 * number_width)
         number_numbers_x = available_space_x // (2 * number_width)
@@ -160,16 +167,23 @@ class NumberInvasion:
 
         # create the full fleet of numbers.
         for row_number in range(1):
+            index = random.randint(0, number_numbers_x - 1)
             # Create the first row of numbers.
             for number_number in range(number_numbers_x):
-                if number_number == 1:
+                # Inserting the correct answer in a random spot.
+                if number_number == index and self.answer not in self.numbers:
                     self._create_answer(number_number, row_number)
                 else:
                     self._create_number(number_number, row_number)
 
     def _create_answer(self, number_number, row_number):
         """Create n number and place it in the row."""
-        self.answer = Answer(self, "8")
+        first_int = random.randint(1, 4)
+        second_int = random.randint(1, 4)
+        print(first_int + second_int)
+        self.problem_answer = first_int + second_int
+        print(self.problem_answer)
+        self.answer = Answer(self, str(self.problem_answer))
         number_width, number_height = self.answer.rect.size
         self.answer.x = number_width + 2 * number_width * number_number
         self.answer.rect.x = self.answer.x
@@ -178,7 +192,7 @@ class NumberInvasion:
 
     def _create_number(self, number_number, row_number):
         """Create n number and place it in the row."""
-        number = Numbers(self)
+        number = Numbers(self, self.problem_answer)
         number_width, number_height = number.rect.size
         number.x = number_width + 2 * number_width * number_number
         number.rect.x = number.x

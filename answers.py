@@ -6,7 +6,7 @@ from pygame.sprite import Sprite
 class Numbers(Sprite):
     """A class to represent a single alien in the fleet."""
 
-    def __init__(self, ai_game):
+    def __init__(self, ai_game, answer):
         """Initialize the alien and set its starting position."""
         super().__init__()
         self.screen = ai_game.screen
@@ -14,8 +14,9 @@ class Numbers(Sprite):
 
         self.all_numbers = []
         for nums in range(10):
-            number = random.choice([1, 2, 3, 4, 5])
-            self.all_numbers.append(str(number))
+            number = random.randint(0, 6)
+            if number != answer:
+                self.all_numbers.append(str(number))
 
         # Create a number as an image
         number_font = pygame.font.SysFont(None, 46)

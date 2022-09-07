@@ -12,11 +12,6 @@ class Answer(Sprite):
         self.screen = ai_game.screen
         self.settings = ai_game.settings
 
-        self.all_numbers = []
-        for nums in range(10):
-            number = random.choice([1, 2, 3, 4, 5, 6, 7, 8, 9])
-            self.all_numbers.append(str(number))
-
         # Create a number as an image
         number_font = pygame.font.SysFont(None, 46)
         background = (0, 0, 0)
