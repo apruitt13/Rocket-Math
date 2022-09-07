@@ -8,6 +8,7 @@ from ship import Ship
 from bullet import Bullet
 from answers import Numbers
 from correct_answer import Answer
+from equation import Equation
 
 
 
@@ -30,7 +31,14 @@ class NumberInvasion:
         self.answer = None
         self.problem_answer = None
 
+        self.first_int = random.randint(1, 4)
+        self.second_int = random.randint(1, 4)
+        self.sign = "+"
+        self.problem = (str(self.first_int) + self.sign + str(self.second_int))
+
         self._create_fleet()
+
+        self.show_equation = Equation(self, self.problem)
 
         # Set the background color.
         self.bg_color = (230, 230, 230)
@@ -178,10 +186,7 @@ class NumberInvasion:
 
     def _create_answer(self, number_number, row_number):
         """Create n number and place it in the row."""
-        first_int = random.randint(1, 4)
-        second_int = random.randint(1, 4)
-        print(first_int + second_int)
-        self.problem_answer = first_int + second_int
+        self.problem_answer = self.first_int + self.second_int
         print(self.problem_answer)
         self.answer = Answer(self, str(self.problem_answer))
         number_width, number_height = self.answer.rect.size
@@ -200,15 +205,18 @@ class NumberInvasion:
         self.numbers.add(number)
 
     def _update_screen(self):
-            """Update images on the screen, and flip to the new screen."""
-            # Redraw the screen during each pass through the loop.
-            self.screen.fill(self.settings.bg_color)
-            self.ship.blitme()
-            for bullet in self.bullets.sprites():
-                bullet.draw_bullet()
-            self.numbers.draw(self.screen)
-            # Make the most recently drawn screen visible.
-            pygame.display.flip()
+        """Update images on the screen, and flip to the new screen."""
+        # Redraw the screen during each pass through the loop.
+        self.screen.fill(self.settings.bg_color)
+        self.ship.blitme()
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
+        self.numbers.draw(self.screen)
+
+        self.show_equation.draw_equation()
+
+        # Make the most recently drawn screen visible.
+        pygame.display.flip()
 
 if __name__ == '__main__':
     # Make a game instance, and run the game.
