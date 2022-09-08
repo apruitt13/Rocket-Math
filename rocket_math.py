@@ -170,15 +170,14 @@ class NumberInvasion:
         available_space_y = (self.settings.screen_height - (3 * number_height) - ship_height)
         number_rows = available_space_y // (2 * number_height)
 
-        # create the full fleet of numbers.
+        # create the full fleet of numbers. One row
         for row_number in range(1):
             index = random.randint(0, number_numbers_x - 1)
+            self._create_answer(index, row_number)
             # Create the first row of numbers.
             for number_number in range(number_numbers_x):
                 # Inserting the correct answer in a random spot.
-                if number_number == index:
-                    self._create_answer(number_number, row_number)
-                else:
+                if number_number != index:
                     self._create_number(number_number, row_number)
 
 
