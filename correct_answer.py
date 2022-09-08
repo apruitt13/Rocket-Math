@@ -13,7 +13,7 @@ class Answer(Sprite):
         self.settings = ai_game.settings
 
         # Create a number as an image
-        number_font = pygame.font.SysFont(None, 46)
+        number_font = pygame.font.SysFont(None, 72)
         background = (0, 0, 0)
         color = (245, 245, 245)
         self.image = number_font.render(answer, color, background)

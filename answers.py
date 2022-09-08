@@ -14,12 +14,16 @@ class Numbers(Sprite):
 
         self.all_numbers = []
         for nums in range(10):
-            number = random.randint(0, 6)
-            if number != answer:
+            number = random.randint(0, 9)
+            print(number)
+            print("This is the answer", answer)
+            if number == answer:
+                self.all_numbers.append(str(number + 1))
+            else:
                 self.all_numbers.append(str(number))
 
         # Create a number as an image
-        number_font = pygame.font.SysFont(None, 46)
+        number_font = pygame.font.SysFont(None, 72)
         background = (0, 0, 0)
         color = (245, 245, 245)
         self.image = number_font.render(self.all_numbers[1], color, background)

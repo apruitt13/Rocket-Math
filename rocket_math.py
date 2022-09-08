@@ -10,8 +10,6 @@ from answers import Numbers
 from correct_answer import Answer
 from equation import Equation
 
-# NOTE = Need to update so the equation changes each time.
-
 class NumberInvasion:
     """Overall class to manage game assets and behavior."""
 
@@ -29,10 +27,10 @@ class NumberInvasion:
         self.bullets = pygame.sprite.Group()
         self.numbers = pygame.sprite.Group()
         self.answer = None
-        self.problem_answer = None
 
-        self.first_int = random.randint(1, 4)
-        self.second_int = random.randint(1, 4)
+        self.first_int = None
+        self.second_int = None
+        self.problem_answer = None
         self.sign = "+"
         self.problem = (str(self.first_int) + self.sign + str(self.second_int))
 
@@ -178,10 +176,11 @@ class NumberInvasion:
             # Create the first row of numbers.
             for number_number in range(number_numbers_x):
                 # Inserting the correct answer in a random spot.
-                if number_number == index and self.answer not in self.numbers:
+                if number_number == index:
                     self._create_answer(number_number, row_number)
                 else:
                     self._create_number(number_number, row_number)
+
 
     def _create_answer(self, number_number, row_number):
         """Create n number and place it in the row."""
@@ -190,7 +189,6 @@ class NumberInvasion:
         self.problem = (str(self.first_int) + self.sign + str(self.second_int))
         self.show_equation = Equation(self, self.problem)
         self.problem_answer = self.first_int + self.second_int
-        print(self.problem_answer)
         self.answer = Answer(self, str(self.problem_answer))
         number_width, number_height = self.answer.rect.size
         self.answer.x = number_width + 2 * number_width * number_number
