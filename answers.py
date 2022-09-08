@@ -40,8 +40,7 @@ class Numbers(Sprite):
 
     def update(self):
         """Move the alien to the right or the left."""
-        self.x += (self.settings.numbers_speed *
-                        self.settings.fleet_direction)
+        self.x += (self.settings.numbers_speed * self.settings.fleet_direction)
         self.rect.x = self.x
 
 

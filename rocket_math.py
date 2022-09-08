@@ -10,7 +10,7 @@ from answers import Numbers
 from correct_answer import Answer
 from equation import Equation
 
-
+# NOTE = Need to update so the equation changes each time.
 
 class NumberInvasion:
     """Overall class to manage game assets and behavior."""
@@ -112,6 +112,7 @@ class NumberInvasion:
             self.bullets.empty()
             self.numbers.empty()
             self._create_fleet()
+            self.show_equation
             print("hit")
 
         #if not self.numbers:
@@ -160,7 +161,6 @@ class NumberInvasion:
 
     def _create_fleet(self):
         """Create the fleet of numbers."""
-        print(self.problem_answer)
         # Make a number.
         number = Numbers(self, self.problem_answer)
         number_width, number_height = number.rect.size
@@ -169,8 +169,7 @@ class NumberInvasion:
 
         # Determine the number of rows of numbers that fit on the screen.
         ship_height = self.ship.rect.height
-        available_space_y = (self.settings.screen_height -
-                                (3 * number_height) - ship_height)
+        available_space_y = (self.settings.screen_height - (3 * number_height) - ship_height)
         number_rows = available_space_y // (2 * number_height)
 
         # create the full fleet of numbers.
@@ -186,6 +185,10 @@ class NumberInvasion:
 
     def _create_answer(self, number_number, row_number):
         """Create n number and place it in the row."""
+        self.first_int = random.randint(1, 4)
+        self.second_int = random.randint(1, 4)
+        self.problem = (str(self.first_int) + self.sign + str(self.second_int))
+        self.show_equation = Equation(self, self.problem)
         self.problem_answer = self.first_int + self.second_int
         print(self.problem_answer)
         self.answer = Answer(self, str(self.problem_answer))
